@@ -80,9 +80,6 @@ async function enableSound() {
   text-align: center;
   position: relative;
   z-index: 1;
-
-  /* Espacio editorial */
-  padding: 22px 10px 10px;
 }
 
 /* Imagen pulp */
@@ -90,8 +87,7 @@ async function enableSound() {
   width: min(350px, 72vw);
   height: auto;
   display: block;
-  margin: 0 auto 14px;
-
+  margin-left: 20px;
   /* Integración cromática (sin cambiar la paleta) */
   filter: saturate(1.05) contrast(1.02);
   opacity: .95;

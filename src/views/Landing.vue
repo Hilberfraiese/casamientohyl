@@ -646,7 +646,6 @@ input::placeholder{ color: rgba(31, 60, 136, 0.5); }
   background: transparent;
   border: 1px solid rgba(31, 60, 136, 0.22);
   color: #1F3C88;
-
   display:grid;
   place-items:center;
   cursor:pointer;
@@ -667,7 +666,6 @@ input::placeholder{ color: rgba(31, 60, 136, 0.5); }
   width: 25px;
   height: 25px;
   display:block;
-  margin-left: -10px;
 }
 
 .pControls{
