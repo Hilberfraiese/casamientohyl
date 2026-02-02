@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import { onMounted, onUnmounted, ref, computed } from "vue";
 import introVideo from "../assets/intro.mp4";
 import song from "../assets/song.mp3";
 
@@ -76,6 +76,32 @@ onMounted(async () => {
   }
 
   syncAudioFlags();
+});
+
+function stopAudio() {
+  if (!audioEl) return;
+  audioEl.pause();
+  audioEl.currentTime = 0;
+  audioEl.src = ""; // libera el recurso
+  audioEl = null;
+}
+
+onUnmounted(() => {
+  stopAudio();
+});
+
+function handleVisibilityChange() {
+  if (document.hidden) {
+    audioEl?.pause();
+  }
+}
+
+onMounted(() => {
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("visibilitychange", handleVisibilityChange);
 });
 
 function next() {
@@ -203,6 +229,7 @@ async function submitForm() {
     sent.value = true;
     step.value = 7;
   } catch (e) {
+    console.log(e)
     errorMsg.value = "No pude enviar la confirmación. Probá de nuevo.";
   } finally {
     isSubmitting.value = false;
@@ -329,7 +356,7 @@ async function submitForm() {
 
             <div class="finalMessage" v-else>
               <p><strong>¡Genial!</strong></p>
-              <p>Ya tenemos tus datos. Enviá la confirmación cuando quieras 💙</p>
+              <p>Ya tenemos tus datos. Solo falta que des click en enviar 💙</p>
             </div>
 
             <div class="actions">
@@ -350,7 +377,7 @@ async function submitForm() {
             
              <div class="actions">
                 <button class="btn" type="button" @click="resetForm">
-                  Confirmar nuevo invitado
+                  Confirmar otro invitado
                </button>
               </div>
             </div>
@@ -412,23 +439,32 @@ async function submitForm() {
 
 <style scoped>
 .page{
+  /* ✅ reemplazar */
   min-height: 100vh;
-  background: #F6EFD8;   /* manteca */
-  color: #1F3C88;        /* azul */
+  min-height: 100svh;
+  min-height: 100dvh;
+
+  background: #F6EFD8;
+  color: #1F3C88;
   padding: 24px 18px;
 }
 
 /* ✅ Esto hace que “arranque en el medio” como el SoundGate */
 .wrap{
-  min-height: calc(100vh - 48px);
-  display: grid;
-  place-items: center;
-  align-content: center;
-  gap: 18px;
-
   max-width: 920px;
   margin: 0 auto;
   text-align: center;
+
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 14px; /* antes 18px */
 }
 
 /* Header */
@@ -567,7 +603,7 @@ input::placeholder{ color: rgba(31, 60, 136, 0.5); }
   flex-direction: column;
   align-items: center; /* 👈 centra todo el bloque */
   gap: 10px;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .sub-label {     /* más chico */
@@ -657,11 +693,13 @@ input::placeholder{ color: rgba(31, 60, 136, 0.5); }
 
 /* Si en algún celu queda alto, permitimos scroll sin romper la estética */
 @media (max-height: 740px){
+@media (max-height: 740px){
   .wrap{
-    place-items: start center;
-    align-content: start;
-    padding-top: 18px;
-    padding-bottom: 18px;
+    justify-content: flex-start;
+    padding-top: 14px;
+    padding-bottom: 14px;
   }
+  .player{ margin-top: 14px; }
+}
 }
 </style>

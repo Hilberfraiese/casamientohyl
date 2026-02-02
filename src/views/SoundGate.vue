@@ -44,16 +44,23 @@ async function enableSound() {
   --bg: #F6EFD8;
   --ink: #1F3C88;
 
-  min-height: 100vh;
+  /* ✅ reemplazar */
+  min-height: 100vh;      /* fallback */
+  min-height: 100svh;     /* viewport “estable” en mobile */
+  min-height: 100dvh;     /* viewport dinámico (mejor en chrome moderno) */
+
   display: grid;
   place-items: center;
-  padding: 28px 18px;
+
+  /* ✅ safe area (no hace daño en android, ayuda en iOS) */
+  padding: calc(28px + env(safe-area-inset-top)) 18px calc(28px + env(safe-area-inset-bottom));
 
   background: var(--bg);
   color: var(--ink);
   position: relative;
   overflow: hidden;
 }
+
 
 /* Un toque “impreso” / elegante (sin cambiar colores) */
 .grain{
