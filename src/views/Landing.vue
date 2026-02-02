@@ -244,7 +244,9 @@ async function submitForm() {
     <div class="wrap">
       <header class="top">
         <h2>LUCIA & HILBER</h2>
-        <p class="meta">Mirador 9, Ruta 11 4774, Paraje Alfar • 19:00 hs</p>
+        <p class="meta">Sabado 7 de Marzo de 2026 • 19:00 hs</p>
+        <p class="meta">Mirador 9, Ruta 11 4774, Paraje Alfar</p>
+
       </header>
 
       <section class="hero">
